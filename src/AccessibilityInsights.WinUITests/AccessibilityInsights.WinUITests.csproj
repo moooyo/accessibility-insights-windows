@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RestoreConfigFile>$(MSBuildThisFileDirectory)..\AccessibilityInsights.WinUI\NuGet.Config</RestoreConfigFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.7.3" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.7.3" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="Axe.Windows" Version="2.4.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AccessibilityInsights.WinUI\Models\*.cs" Link="Models\%(Filename)%(Extension)" />
+    <Compile Include="..\AccessibilityInsights.WinUI\ViewModels\MainPageViewModel.cs" Link="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="..\AccessibilityInsights.WinUI\Services\InspectionService.cs" Link="Services\InspectionService.cs" />
+    <Compile Include="..\AccessibilityInsights.WinUI\Services\SettingsStore.cs" Link="Services\SettingsStore.cs" />
+    <Compile Include="..\AccessibilityInsights.WinUI\Services\GitHubIssueService.cs" Link="Services\GitHubIssueService.cs" />
+    <None Include="..\AccessibilityInsights.Extensions.GitHub\Properties\Resources.resx"
+          Link="TestFiles\GitHubResources.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\AccessibilityInsights.WinUI\Strings\en-us\Resources.resw"
+          Link="TestFiles\WinUIResources.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\AccessibilityInsights.SharedUxTests\Resources\ConfigSettings.json"
+          Link="TestFiles\ConfigSettings.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\AccessibilityInsights.SharedUxTests\Resources\LegacyConfigSettings.json"
+          Link="TestFiles\LegacyConfigSettings.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\UITests\TestFiles\WildlifeManagerTest.a11yevent"
+          Link="TestFiles\WildlifeManagerTest.a11yevent" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\UITests\TestFiles\WildlifeManagerTest.a11ytest"
+          Link="TestFiles\WildlifeManagerTest.a11ytest" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\UITests\TestFiles\WildlifeManagerTestWithFrameworkIssues.a11ytest"
+          Link="TestFiles\WildlifeManagerTestWithFrameworkIssues.a11ytest" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

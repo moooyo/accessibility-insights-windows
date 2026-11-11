@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="InspectNavigation.Content" xml:space="preserve"><value>Inspect</value></data>
+  <data name="TestNavigation.Content" xml:space="preserve"><value>Automated checks</value></data>
+  <data name="ContrastNavigation.Content" xml:space="preserve"><value>Color contrast</value></data>
+  <data name="EventsNavigation.Content" xml:space="preserve"><value>Events</value></data>
+  <data name="SettingsNavigation.Content" xml:space="preserve"><value>Settings</value></data>
+  <data name="RunChecks.Label" xml:space="preserve"><value>Run checks</value></data>
+  <data name="OpenSnapshot.Label" xml:space="preserve"><value>Open</value></data>
+  <data name="SaveSnapshot.Label" xml:space="preserve"><value>Save</value></data>
+  <data name="PropertyHeader.Text" xml:space="preserve"><value>Property</value></data>
+  <data name="ValueHeader.Text" xml:space="preserve"><value>Value</value></data>
+  <data name="ContrastTitle.Text" xml:space="preserve"><value>Color contrast</value></data>
+  <data name="ForegroundInput.Header" xml:space="preserve"><value>Foreground (#RRGGBB)</value></data>
+  <data name="BackgroundInput.Header" xml:space="preserve"><value>Background (#RRGGBB)</value></data>
+  <data name="SmallTextLabel.Text" xml:space="preserve"><value>Normal text (4.5:1)</value></data>
+  <data name="LargeTextLabel.Text" xml:space="preserve"><value>Large text (3:1)</value></data>
+  <data name="NonTextLabel.Text" xml:space="preserve"><value>Non-text objects (3:1)</value></data>
+  <data name="SettingsTitle.Text" xml:space="preserve"><value>Settings</value></data>
+  <data name="ThemePicker.Header" xml:space="preserve"><value>Theme</value></data>
+  <data name="FocusSelection.Header" xml:space="preserve"><value>Select by keyboard focus</value></data>
+  <data name="MouseSelectionWarning.Title" xml:space="preserve"><value>Mouse selection is experimental</value></data>
+  <data name="MouseSelectionWarning.Message" xml:space="preserve"><value>Mouse-only selection has an unresolved intermittent native crash. Keep keyboard-focus selection enabled.</value></data>
+  <data name="ApplicationScope.Header" xml:space="preserve"><value>Select entire application</value></data>
+  <data name="ErrorBar.Title" xml:space="preserve"><value>Operation failed</value></data>
+  <data name="SelectionButton.Label" xml:space="preserve"><value>Start selection</value></data>
+  <data name="HighlightToggle.Label" xml:space="preserve"><value>Highlight</value></data>
+  <data name="ChecksTab.Header" xml:space="preserve"><value>Automated checks</value></data>
+  <data name="TabStopsTab.Header" xml:space="preserve"><value>Tab stops</value></data>
+  <data name="ScreenshotTab.Header" xml:space="preserve"><value>Screenshot</value></data>
+  <data name="TabStopRecordButton.Content" xml:space="preserve"><value>Start tab-stop recording</value></data>
+  <data name="CaptureScreenshot.Content" xml:space="preserve"><value>Capture screenshot</value></data>
+  <data name="DetectColors.Content" xml:space="preserve"><value>Detect selected element colors</value></data>
+  <data name="RecordButton.Content" xml:space="preserve"><value>Start recording</value></data>
+  <data name="OpenEvents.Content" xml:space="preserve"><value>Open events</value></data>
+  <data name="SaveEvents.Content" xml:space="preserve"><value>Save events</value></data>
+  <data name="SystemTheme.Content" xml:space="preserve"><value>System default</value></data>
+  <data name="LightTheme.Content" xml:space="preserve"><value>Light</value></data>
+  <data name="DarkTheme.Content" xml:space="preserve"><value>Dark</value></data>
+  <data name="AlwaysOnTop.Header" xml:space="preserve"><value>Always on top</value></data>
+  <data name="PauseHotkey.Header" xml:space="preserve"><value>Selection hotkey</value></data>
+  <data name="RecordHotkey.Header" xml:space="preserve"><value>Recording hotkey</value></data>
+  <data name="ScanHotkey.Header" xml:space="preserve"><value>Scan hotkey</value></data>
+  <data name="SaveSettings.Content" xml:space="preserve"><value>Save settings</value></data>
+  <data name="HighContrastNote.Text" xml:space="preserve"><value>High contrast follows the Windows contrast theme automatically.</value></data>
+  <data name="MigrationNotice.Title" xml:space="preserve"><value>Migration preview</value></data>
+  <data name="MigrationNotice.Message" xml:space="preserve"><value>This WinUI target does not yet replace the WPF application. Azure DevOps, update, telemetry, and remaining legacy UI workflows still require migration.</value></data>
+  <data name="NoElementSelected" xml:space="preserve"><value>No element selected</value></data>
+  <data name="InitialStatus" xml:space="preserve"><value>Start selection, then point to another application.</value></data>
+  <data name="PassResult" xml:space="preserve"><value>Pass</value></data>
+  <data name="FailResult" xml:space="preserve"><value>Fail</value></data>
+  <data name="InvalidColors" xml:space="preserve"><value>Enter two opaque colors in #RRGGBB format.</value></data>
+  <data name="IncompleteResults" xml:space="preserve"><value>The element limit was exceeded. Results are incomplete; select a smaller scope.</value></data>
+  <data name="ScanSummary" xml:space="preserve"><value>{0} elements; {1} checks; {2} failed checks.</value></data>
+  <data name="SettingsSaved" xml:space="preserve"><value>Settings saved.</value></data>
+  <data name="StartSelection" xml:space="preserve"><value>Start selection</value></data>
+  <data name="PauseSelection" xml:space="preserve"><value>Pause selection</value></data>
+  <data name="SavedFile" xml:space="preserve"><value>Saved {0}</value></data>
+  <data name="StartRecording" xml:space="preserve"><value>Start recording</value></data>
+  <data name="StopRecording" xml:space="preserve"><value>Stop recording</value></data>
+  <data name="StartTabRecording" xml:space="preserve"><value>Start tab-stop recording</value></data>
+  <data name="StopTabRecording" xml:space="preserve"><value>Stop tab-stop recording</value></data>
+  <data name="TabStopCount" xml:space="preserve"><value>{0} tab stops recorded.</value></data>
+  <data name="ScreenshotCaptured" xml:space="preserve"><value>Screenshot captured.</value></data>
+  <data name="ColorConfidence" xml:space="preserve"><value>Confidence: {0}</value></data>
+  <data name="EventsLoaded" xml:space="preserve"><value>Loaded {0} events.</value></data>
+  <data name="EventsLimit" xml:space="preserve"><value>Only the most recent 10,000 events are retained.</value></data>
+  <data name="EventCount" xml:space="preserve"><value>{0} events recorded.</value></data>
+  <data name="FileGitHubIssue.Label" xml:space="preserve"><value>File GitHub issue</value></data>
+  <data name="GitHubRepository.Header" xml:space="preserve"><value>GitHub repository</value></data>
+  <data name="GitHubRepository.PlaceholderText" xml:space="preserve"><value>https://github.com/owner/repo</value></data>
+  <data name="OpenGitHub" xml:space="preserve"><value>Open GitHub</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="ImportWpfSettings.Content" xml:space="preserve"><value>Import WPF settings</value></data>
+  <data name="LegacySettingsImported" xml:space="preserve"><value>Selection, scope, always-on-top, and three hotkeys imported. Review and save settings. Other WPF settings are not imported; the original file is unchanged.</value></data>
+  <data name="NoFailureIssueTitle" xml:space="preserve"><value>({0}/{1}) has an accessibility issue that needs investigation</value></data>
+  <data name="NoFailureIssueBody" xml:space="preserve"><value>The following accessibility issue needs investigation.
+
+**App:** {0}
+
+**Element path:** {1}
+
+**Issue Details:** []
+
+**How To Fix:** []</value></data>
+  <data name="SingleFailureIssueTitle" xml:space="preserve"><value>{0}: ({1}/{2}) {3}</value></data>
+  <data name="SingleFailureIssueBody" xml:space="preserve"><value>The following accessibility issue needs investigation.
+
+**App:** {0}
+
+**Element path:** {1}
+
+**Issue Details:** {2} [{3}]({4})
+
+**How To Fix:** {5}
+
+This accessibility issue was found using Accessibility Insights for Windows, a tool that helps debug and find accessibility issues earlier. Get more information and download this tool at https://aka.ms/AccessibilityInsights.</value></data>
+</root>

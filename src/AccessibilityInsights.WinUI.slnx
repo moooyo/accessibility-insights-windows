@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="AccessibilityInsights.WinUI/AccessibilityInsights.WinUI.csproj" />
+  <Project Path="AccessibilityInsights.WinUITests/AccessibilityInsights.WinUITests.csproj" />
+</Solution>
