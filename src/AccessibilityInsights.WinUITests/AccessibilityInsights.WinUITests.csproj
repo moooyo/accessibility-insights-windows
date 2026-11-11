@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <IsTestProject>true</IsTestProject>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\AccessibilityInsights.VersionSwitcher.WinUI\UpdateBootstrap.cs" Link="UpdateBootstrap.cs" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.7.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.7.3" />
+    <ProjectReference Include="..\AccessibilityInsights.Core\AccessibilityInsights.Core.csproj" />
+    <ProjectReference Include="..\AccessibilityInsights.UpdateEngine\AccessibilityInsights.UpdateEngine.csproj" />
+    <Content Include="..\UITests\TestFiles\WildlifeManagerTest.a11ytest"
+             Link="Fixtures\WildlifeManagerTest.a11ytest" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\tools\scripts\New-WinUIInventory.ps1"
+             Link="Scripts\New-WinUIInventory.ps1" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

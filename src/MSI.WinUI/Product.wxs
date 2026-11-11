@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) Microsoft. All rights reserved.
+     Licensed under the MIT license. See LICENSE file in the project root for full license information. -->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+  <Package Name="Accessibility Insights For Windows v1.1" Language="1033" Version="$(var.BuildVer)"
+           Manufacturer="Microsoft" UpgradeCode="0D760959-F713-46C4-9A3D-4E73619EE3B5" InstallerVersion="500">
+    <MajorUpgrade Schedule="afterInstallInitialize" RemoveFeatures="All" AllowDowngrades="no"
+                  DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+    <Binary Id="CustomActions" SourceFile="$(var.CustomActionDir)\AccessibilityInsights.CustomActions.CA.dll" />
+    <UI>
+      <ui:WixUI Id="WixUI_InstallDir" />
+      <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchInstalledExe" Condition="NOT Installed" />
+    </UI>
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.RepositoryDir)\src\MSI\Resources\DialogBackground.png" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.RepositoryDir)\src\MSI\Resources\WixDialogBanner.png" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.RepositoryDir)\eula.rtf" />
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_48_OR_LATER_INSTALLED" />
+    <Launch Condition="Installed OR WIX_IS_NETFRAMEWORK_48_OR_LATER_INSTALLED"
+            Message="[ProductName] requires .NET Framework 4.8 or later for its Windows Installer custom action." />
+    <Feature Id="ProductFeature" Title="Accessibility Insights for Windows" Level="1">
+      <ComponentGroupRef Id="PublishedFiles" />
+      <ComponentRef Id="ApplicationIntegration" />
+    </Feature>
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="AccessibilityInsightsFolder" Name="AccessibilityInsights">
+        <Directory Id="INSTALLFOLDER" Name="1.1" />
+      </Directory>
+    </StandardDirectory>
+    <StandardDirectory Id="DesktopFolder" />
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="ApplicationProgramsFolder" Name="AccessibilityInsights" />
+    </StandardDirectory>
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="ApplicationIntegration" Guid="A3B5E4E9-751F-43A1-8C45-862D5661105C">
+        <Shortcut Id="ApplicationStartMenuShortcut" Directory="ApplicationProgramsFolder"
+                  Name="Accessibility Insights for Windows" Target="[#FileExe]" WorkingDirectory="INSTALLFOLDER"
+                  Icon="AccessibilityInsights.exe" />
+        <Shortcut Id="ApplicationDesktopShortcut" Directory="DesktopFolder"
+                  Name="Accessibility Insights For Windows" Target="[#FileExe]" WorkingDirectory="INSTALLFOLDER"
+                  Icon="AccessibilityInsights.exe" />
+        <RemoveFolder Id="ApplicationProgramsFolder" Directory="ApplicationProgramsFolder" On="uninstall" />
+        <ProgId Id="A11y.Test" Description="Accessibility Insights For Windows Test file">
+          <Extension Id="a11ytest" ContentType="AccessibilityInsights Test File">
+            <Verb Id="open" Command="Open" TargetFile="FileExe" Argument="&quot;%1&quot;" />
+          </Extension>
+        </ProgId>
+        <ProgId Id="A11y.Event" Description="Accessibility Insights For Windows Events file">
+          <Extension Id="a11yevent" ContentType="AccessibilityInsights Events File">
+            <Verb Id="open" Command="Open" TargetFile="FileExe" Argument="&quot;%1&quot;" />
+          </Extension>
+        </ProgId>
+        <RegistryValue Root="HKLM" Key="Software\AccessibilityInsights" Name="Installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    <Icon Id="AccessibilityInsights.exe" SourceFile="$(var.RepositoryDir)\src\AccessibilityInsights.SharedUx\Resources\Icons\BrandIconDesktop.ico" />
+    <Property Id="WixShellExecTarget" Value="[#FileExe]" />
+    <CustomAction Id="LaunchInstalledExe" BinaryRef="Wix4UtilCA_X64" DllEntry="WixShellExec" Impersonate="yes" />
+    <CustomAction Id="RemoveUserConfigFiles" BinaryRef="CustomActions" DllEntry="RemoveUserConfigFiles" Impersonate="yes" />
+    <InstallExecuteSequence>
+      <Custom Action="RemoveUserConfigFiles" After="InstallFinalize"
+              Condition="Installed and (REMOVE=&quot;ALL&quot;) and NOT UPGRADINGPRODUCTCODE" />
+      <Custom Action="LaunchInstalledExe" After="RemoveUserConfigFiles"
+              Condition="NOT REMOVE and WIX_UPGRADE_DETECTED and NOT SECONDSEQUENCE" />
+    </InstallExecuteSequence>
+  </Package>
+</Wix>

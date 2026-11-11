@@ -1,0 +1,106 @@
+﻿<!-- Copyright (c) Microsoft. All rights reserved.
+     Licensed under the MIT license. See LICENSE file in the project root for full license information.-->
+<Page
+    x:Class="AccessibilityInsights_WinUI.Views.TabStopsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="using:AccessibilityInsights.Core"
+    xmlns:local="using:AccessibilityInsights_WinUI.Views"
+    x:DefaultBindMode="OneWay"
+    NavigationCacheMode="Required">
+    <Grid RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Uid="TabStopsHeading" Style="{StaticResource TitleTextBlockStyle}" />
+        <StackPanel Grid.Row="1" Spacing="8">
+            <InfoBar x:Uid="RecordingError"
+                     IsOpen="{x:Bind ViewModel.HasError, Mode=OneWay}"
+                     Message="{x:Bind ViewModel.Error, Mode=OneWay}"
+                     Severity="Error" IsClosable="False" />
+            <InfoBar x:Uid="RecordingBufferWarning"
+                     IsOpen="{x:Bind ViewModel.HasDroppedTabStops, Mode=OneWay}"
+                     Message="{x:Bind ViewModel.TabStopBufferNotice, Mode=OneWay}"
+                     Severity="Warning" IsClosable="False" />
+        </StackPanel>
+
+        <Grid Grid.Row="2" ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Uid="TabStopTargetHeading" Style="{StaticResource SubtitleTextBlockStyle}" />
+            <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.TargetName, Mode=OneWay}"
+                       TextWrapping="Wrap" AutomationProperties.AutomationId="TabStopRecordingTarget" />
+        </Grid>
+
+        <TextBlock Grid.Row="3" x:Uid="TabStopInstructions" TextWrapping="Wrap" />
+
+        <CommandBar Grid.Row="4" DefaultLabelPosition="Right" HorizontalAlignment="Left">
+            <AppBarButton x:Uid="StartTabStopRecording" Icon="Play"
+                          Command="{x:Bind ViewModel.StartTabStopsCommand}"
+                          AutomationProperties.AutomationId="StartTabStopRecording" />
+            <AppBarButton x:Uid="StopTabStopRecording" Icon="Stop"
+                          Command="{x:Bind ViewModel.StopTabStopsCommand}"
+                          AutomationProperties.AutomationId="StopTabStopRecording" />
+            <AppBarButton x:Uid="ClearTabStops" Icon="Delete"
+                          Command="{x:Bind ViewModel.ClearTabStopsCommand}"
+                          AutomationProperties.AutomationId="ClearTabStops" />
+        </CommandBar>
+
+        <Grid Grid.Row="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid ColumnSpacing="12" Padding="12,0,12,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Uid="TabStopOrderColumn" />
+                <TextBlock Grid.Column="1" x:Uid="TabStopTimeColumn" />
+                <TextBlock Grid.Column="2" x:Uid="TabStopElementColumn" />
+            </Grid>
+            <Grid Grid.Row="1">
+                <ListView x:Name="TabStopList" x:Uid="RecordedTabStopsList" ItemsSource="{x:Bind ViewModel.TabStops}"
+                          SelectedItem="{x:Bind ViewModel.SelectedTabStop, Mode=TwoWay}"
+                          SelectionMode="Extended" AutomationProperties.AutomationId="RecordedTabStops">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="core:TabStopRecord">
+                            <Grid ColumnSpacing="12" Padding="0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{x:Bind Order, Mode=OneTime}" />
+                                <TextBlock Grid.Column="1" Text="{x:Bind TimeStamp, Mode=OneTime}" />
+                                <TextBlock Grid.Column="2" Text="{x:Bind Element.Sender, Mode=OneTime}"
+                                           TextWrapping="Wrap" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <TextBlock x:Uid="NoRecordedTabStops" HorizontalAlignment="Center" VerticalAlignment="Center"
+                           TextWrapping="Wrap" TextAlignment="Center"
+                           Visibility="{x:Bind local:TabStopsPage.InvertBoolToVisibility(ViewModel.HasTabStops), Mode=OneWay}" />
+            </Grid>
+        </Grid>
+
+        <StackPanel Grid.Row="6" Orientation="Horizontal" Spacing="8">
+            <ProgressRing Width="20" Height="20" IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}" />
+            <TextBlock Text="{x:Bind ViewModel.Status, Mode=OneWay}" TextWrapping="Wrap"
+                       AutomationProperties.AutomationId="TabStopRecordingStatus"
+                       AutomationProperties.LiveSetting="Polite" />
+        </StackPanel>
+    </Grid>
+</Page>

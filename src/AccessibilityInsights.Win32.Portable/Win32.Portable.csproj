@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>AccessibilityInsights.Win32</AssemblyName>
+    <RootNamespace>AccessibilityInsights.Win32</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\AccessibilityInsights.Win32\*.cs"
+             Exclude="..\AccessibilityInsights.Win32\Win32Helper.cs" Link="%(Filename)%(Extension)" />
+    <InternalsVisibleTo Include="AccessibilityInsights.SetupLibrary" />
+  </ItemGroup>
+</Project>

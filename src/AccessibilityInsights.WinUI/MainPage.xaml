@@ -1,0 +1,40 @@
+﻿<!-- Copyright (c) Microsoft. All rights reserved.
+     Licensed under the MIT license. See LICENSE file in the project root for full license information.-->
+<Page
+    x:Class="AccessibilityInsights_WinUI.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <NavigationView x:Name="Navigation" IsBackButtonVisible="Collapsed" IsSettingsVisible="False"
+                    SelectionChanged="OnNavigationChanged" PaneDisplayMode="LeftCompact">
+        <NavigationView.MenuItems>
+            <NavigationViewItem x:Uid="InspectNav" Tag="Inspect" Icon="Find" AutomationProperties.AutomationId="NavInspect" />
+            <NavigationViewItem x:Uid="TestNav" Tag="Test" Icon="Accept" AutomationProperties.AutomationId="NavTest" />
+            <NavigationViewItem x:Uid="ContrastNav" Tag="Contrast" Icon="Highlight" AutomationProperties.AutomationId="NavContrast" />
+            <NavigationViewItem x:Uid="EventsNav" Tag="Events" Icon="Play" AutomationProperties.AutomationId="NavEvents" />
+            <NavigationViewItem x:Uid="TabStopsNav" Tag="TabStops" Icon="List" AutomationProperties.AutomationId="NavTabStops" />
+            <NavigationViewItem x:Uid="IssueReportingNav" Tag="Issues" Icon="Document"
+                                AutomationProperties.AutomationId="NavIssueReporting" />
+        </NavigationView.MenuItems>
+        <NavigationView.FooterMenuItems>
+            <NavigationViewItem x:Uid="SettingsNav" Tag="Settings" Icon="Setting"
+                                AutomationProperties.AutomationId="NavSettings" />
+        </NavigationView.FooterMenuItems>
+        <Grid Padding="24" RowSpacing="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <InfoBar IsOpen="{x:Bind ViewModel.HasError, Mode=TwoWay}"
+                     Message="{x:Bind ViewModel.Error, Mode=OneWay}" Severity="Error"
+                     AutomationProperties.AutomationId="OperationError" />
+            <Frame x:Name="ContentFrame" Grid.Row="1" />
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12">
+                <ProgressRing Width="20" Height="20" IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}" />
+                <TextBlock Text="{x:Bind ViewModel.Status, Mode=OneWay}" TextWrapping="Wrap"
+                           AutomationProperties.AutomationId="StatusText"
+                           AutomationProperties.LiveSetting="Polite" />
+            </StackPanel>
+        </Grid>
+    </NavigationView>
+</Page>

@@ -1,0 +1,306 @@
+﻿<!-- Copyright (c) Microsoft. All rights reserved.
+     Licensed under the MIT license. See LICENSE file in the project root for full license information.-->
+<Page
+    x:Class="AccessibilityInsights_WinUI.Views.EventsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="using:AccessibilityInsights.Core"
+    xmlns:local="using:AccessibilityInsights_WinUI.Views"
+    x:DefaultBindMode="OneWay"
+    NavigationCacheMode="Required">
+    <Grid RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Uid="EventsHeading" Style="{StaticResource TitleTextBlockStyle}" />
+        <StackPanel Grid.Row="1" Spacing="8">
+            <InfoBar x:Uid="RecordingError"
+                     IsOpen="{x:Bind ViewModel.HasError, Mode=OneWay}"
+                     Message="{x:Bind ViewModel.Error, Mode=OneWay}"
+                     Severity="Error" IsClosable="False" />
+            <InfoBar x:Uid="RecordingBufferWarning"
+                     IsOpen="{x:Bind ViewModel.HasDroppedEvents, Mode=OneWay}"
+                     Message="{x:Bind ViewModel.EventBufferNotice, Mode=OneWay}"
+                     Severity="Warning" IsClosable="False" />
+        </StackPanel>
+
+        <Grid x:Name="RecordingContent" Grid.Row="2" ColumnSpacing="16" RowSpacing="16">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="ConfigurationRow" Height="3*" />
+                <RowDefinition x:Name="EventsRow" Height="2*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="ConfigurationColumn" Width="*" />
+                <ColumnDefinition x:Name="EventsColumn" Width="0" />
+            </Grid.ColumnDefinitions>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup>
+                    <VisualState x:Name="NarrowLayout">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="0" />
+                        </VisualState.StateTriggers>
+                    </VisualState>
+                    <VisualState x:Name="WideLayout">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="1100" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="ConfigurationRow.Height" Value="*" />
+                            <Setter Target="EventsRow.Height" Value="0" />
+                            <Setter Target="ConfigurationColumn.Width" Value="480" />
+                            <Setter Target="EventsColumn.Width" Value="*" />
+                            <Setter Target="EventLogPanel.(Grid.Row)" Value="0" />
+                            <Setter Target="EventLogPanel.(Grid.Column)" Value="1" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+
+            <Grid x:Name="ConfigurationPanel" RowSpacing="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid ColumnSpacing="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Uid="RecordingTargetHeading" Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.TargetName, Mode=OneWay}"
+                               VerticalAlignment="Center" TextWrapping="Wrap"
+                               AutomationProperties.AutomationId="EventRecordingTarget" />
+                </Grid>
+                <Grid Grid.Row="1" ColumnSpacing="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="ScopePicker" x:Uid="EventScope" SelectionChanged="OnScopeChanged"
+                              SelectedIndex="2" HorizontalAlignment="Stretch"
+                              AutomationProperties.AutomationId="EventRecordingScope">
+                        <ComboBoxItem x:Uid="EventScopeElement" Tag="Element" />
+                        <ComboBoxItem x:Uid="EventScopeDescendants" Tag="Descendants" />
+                        <ComboBoxItem x:Uid="EventScopeSubtree" Tag="Subtree" />
+                    </ComboBox>
+                    <Button Grid.Column="1" x:Uid="RefreshEventConfiguration"
+                            Command="{x:Bind ViewModel.RefreshConfigurationCommand}"
+                            AutomationProperties.AutomationId="RefreshEventConfiguration" />
+                </Grid>
+
+                <CheckBox Grid.Row="2" x:Uid="ShowSelectedOptionsOnly"
+                          IsChecked="{x:Bind ViewModel.ShowSelectedOptionsOnly, Mode=TwoWay}"
+                          AutomationProperties.AutomationId="ShowSelectedEventOptionsOnly" />
+
+                <Grid Grid.Row="3" ColumnSpacing="12" MinHeight="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid RowSpacing="4" MinHeight="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid ColumnSpacing="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Uid="EventFilter"
+                                     Text="{x:Bind ViewModel.EventSearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     AutomationProperties.AutomationId="EventFilter" />
+                            <Button Grid.Column="1" x:Uid="SelectVisibleEvents" Padding="8,4"
+                                    Command="{x:Bind ViewModel.SelectAllVisibleEventsCommand}" />
+                            <Button Grid.Column="2" x:Uid="ClearEventSelection" Padding="8,4"
+                                    Command="{x:Bind ViewModel.ClearEventSelectionCommand}" />
+                        </Grid>
+                        <Grid Grid.Row="1" ColumnSpacing="8" Padding="12,0,12,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="56" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Uid="EventSelectedColumn" />
+                            <TextBlock Grid.Column="1" x:Uid="EventOptionIdColumn" />
+                            <TextBlock Grid.Column="2" x:Uid="EventOptionNameColumn" />
+                        </Grid>
+                        <ListView Grid.Row="2" x:Uid="EventOptionsList"
+                                  ItemsSource="{x:Bind ViewModel.VisibleEventOptions}"
+                                  SelectionMode="None" AutomationProperties.AutomationId="EventOptions">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="core:RecordingOptionViewModel">
+                                    <Grid ColumnSpacing="8" Padding="0,4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="56" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
+                                                  AutomationProperties.AutomationId="{x:Bind AutomationId, Mode=OneTime}"
+                                                  AutomationProperties.Name="{x:Bind Name, Mode=OneTime}" />
+                                        <TextBlock Grid.Column="1" Text="{x:Bind Id, Mode=OneTime}" />
+                                        <TextBlock Grid.Column="2" Text="{x:Bind Name, Mode=OneTime}" TextWrapping="Wrap" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+
+                    <Grid Grid.Column="1" RowSpacing="4" MinHeight="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid ColumnSpacing="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Uid="PropertyFilter"
+                                     Text="{x:Bind ViewModel.PropertySearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     AutomationProperties.AutomationId="PropertyEventFilter" />
+                            <Button Grid.Column="1" x:Uid="SelectVisibleProperties" Padding="8,4"
+                                    Command="{x:Bind ViewModel.SelectAllVisiblePropertiesCommand}" />
+                            <Button Grid.Column="2" x:Uid="ClearPropertySelection" Padding="8,4"
+                                    Command="{x:Bind ViewModel.ClearPropertySelectionCommand}" />
+                        </Grid>
+                        <Grid Grid.Row="1" ColumnSpacing="8" Padding="12,0,12,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="56" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Uid="PropertySelectedColumn" />
+                            <TextBlock Grid.Column="1" x:Uid="PropertyOptionIdColumn" />
+                            <TextBlock Grid.Column="2" x:Uid="RecordingPropertyNameColumn" />
+                        </Grid>
+                        <ListView Grid.Row="2" x:Uid="EventPropertyOptionsList"
+                                  ItemsSource="{x:Bind ViewModel.VisiblePropertyOptions}"
+                                  SelectionMode="None" AutomationProperties.AutomationId="EventPropertyOptions">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="core:RecordingOptionViewModel">
+                                    <Grid ColumnSpacing="8" Padding="0,4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="56" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
+                                                  AutomationProperties.AutomationId="{x:Bind AutomationId, Mode=OneTime}"
+                                                  AutomationProperties.Name="{x:Bind Name, Mode=OneTime}" />
+                                        <TextBlock Grid.Column="1" Text="{x:Bind Id, Mode=OneTime}" />
+                                        <TextBlock Grid.Column="2" Text="{x:Bind Name, Mode=OneTime}" TextWrapping="Wrap" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid x:Name="EventLogPanel" Grid.Row="1" RowSpacing="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <CommandBar DefaultLabelPosition="Right" HorizontalAlignment="Left">
+                    <AppBarButton x:Uid="StartEventRecording" Icon="Play"
+                                  Command="{x:Bind ViewModel.StartEventsCommand}"
+                                  AutomationProperties.AutomationId="StartEventRecording" />
+                    <AppBarButton x:Uid="StopEventRecording" Icon="Stop"
+                                  Command="{x:Bind ViewModel.StopEventsCommand}"
+                                  AutomationProperties.AutomationId="StopEventRecording" />
+                    <AppBarButton x:Uid="ClearEventRecords" Icon="Delete"
+                                  Command="{x:Bind ViewModel.ClearEventsCommand}"
+                                  AutomationProperties.AutomationId="ClearEventRecords" />
+                    <AppBarSeparator />
+                    <AppBarButton x:Uid="OpenEventRecords" Icon="OpenFile"
+                                  Command="{x:Bind ViewModel.OpenEventsCommand}"
+                                  AutomationProperties.AutomationId="OpenEventRecords" />
+                    <AppBarButton x:Uid="SaveEventRecords" Icon="Save"
+                                  Command="{x:Bind ViewModel.SaveEventsCommand}"
+                                  AutomationProperties.AutomationId="SaveEventRecords" />
+                </CommandBar>
+
+                <Grid Grid.Row="1" ColumnSpacing="12" Padding="12,0,12,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="105" />
+                        <ColumnDefinition Width="70" />
+                        <ColumnDefinition Width="210" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Uid="EventTimeColumn" />
+                    <TextBlock Grid.Column="1" x:Uid="EventIdColumn" />
+                    <TextBlock Grid.Column="2" x:Uid="EventNameColumn" />
+                    <TextBlock Grid.Column="3" x:Uid="EventSenderColumn" />
+                </Grid>
+                <Grid Grid.Row="2">
+                    <ListView x:Name="EventList" x:Uid="RecordedEventsList" ItemsSource="{x:Bind ViewModel.Events}"
+                              SelectedItem="{x:Bind ViewModel.SelectedEvent, Mode=TwoWay}"
+                              SelectionMode="Single" AutomationProperties.AutomationId="RecordedEvents">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="core:RecordedEvent">
+                                <Grid ColumnSpacing="12" Padding="0,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="105" />
+                                        <ColumnDefinition Width="70" />
+                                        <ColumnDefinition Width="210" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{x:Bind TimeStamp, Mode=OneTime}" />
+                                    <TextBlock Grid.Column="1" Text="{x:Bind EventId, Mode=OneTime}" />
+                                    <TextBlock Grid.Column="2" Text="{x:Bind EventName, Mode=OneTime}" TextWrapping="Wrap" />
+                                    <TextBlock Grid.Column="3" Text="{x:Bind Sender, Mode=OneTime}" TextWrapping="Wrap" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <TextBlock x:Uid="NoRecordedEvents" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               TextWrapping="Wrap" TextAlignment="Center"
+                               Visibility="{x:Bind local:EventsPage.InvertBoolToVisibility(ViewModel.HasEvents), Mode=OneWay}" />
+                </Grid>
+
+                <TextBlock Grid.Row="3" x:Uid="EventDetailsHeading" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <ListView Grid.Row="4" x:Uid="EventDetailsList" ItemsSource="{x:Bind ViewModel.EventDetails}" SelectionMode="None"
+                          AutomationProperties.AutomationId="RecordedEventDetails">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="core:RecordedProperty">
+                            <Grid ColumnSpacing="12" Padding="0,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="180" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{x:Bind Name, Mode=OneTime}" TextWrapping="Wrap" />
+                                <TextBlock Grid.Column="1" Text="{x:Bind Value, Mode=OneTime}"
+                                           TextWrapping="Wrap" IsTextSelectionEnabled="True" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="8">
+            <ProgressRing Width="20" Height="20" IsActive="{x:Bind ViewModel.IsBusy, Mode=OneWay}" />
+            <TextBlock Text="{x:Bind ViewModel.Status, Mode=OneWay}" TextWrapping="Wrap"
+                       AutomationProperties.AutomationId="RecordingStatus"
+                       AutomationProperties.LiveSetting="Polite" />
+        </StackPanel>
+    </Grid>
+</Page>

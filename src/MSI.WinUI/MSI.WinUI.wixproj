@@ -1,0 +1,21 @@
+<Project Sdk="WixToolset.Sdk/4.0.6">
+  <PropertyGroup>
+    <OutputName>AccessibilityInsights</OutputName>
+    <InstallerPlatform>x64</InstallerPlatform>
+    <BuildVer Condition="'$(BuildVer)' == ''">1.1.$([System.DateTime]::Today.Subtract($([System.DateTime]::new(2017, 1, 1))).Days).1</BuildVer>
+    <DefineConstants>BuildVer=$(BuildVer);LayoutDir=$(LayoutDir);CustomActionDir=$(CustomActionDir);RepositoryDir=$(MSBuildProjectDirectory)\..\..</DefineConstants>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="WixToolset.NetFx.wixext" Version="4.0.6" />
+    <PackageReference Include="WixToolset.UI.wixext" Version="4.0.6" />
+    <PackageReference Include="WixToolset.Util.wixext" Version="4.0.6" />
+    <Compile Include="$(InventoryFile)" Condition="'$(InventoryFile)' != ''" />
+  </ItemGroup>
+  <Target Name="ValidatePublishedInputs" BeforeTargets="CoreCompile">
+    <Error Condition="!Exists('$(LayoutDir)\AccessibilityInsights.exe')" Text="Publish the WinUI application with tools\scripts\Publish-WinUI.ps1 first." />
+    <Error Condition="!Exists('$(LayoutDir)\VersionSwitcher\AccessibilityInsights.VersionSwitcher.exe')" Text="The published WinUI version switcher is missing." />
+    <Error Condition="!Exists('$(InventoryFile)')" Text="The inventory generated from the actual publish output is missing." />
+    <Error Condition="!Exists('$(CustomActionDir)\AccessibilityInsights.CustomActions.CA.dll')" Text="The Windows Installer custom-action package is missing." />
+  </Target>
+</Project>

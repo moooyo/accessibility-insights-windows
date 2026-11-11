@@ -1,0 +1,23 @@
+<!-- Copyright (c) Microsoft. All rights reserved.
+     Licensed under the MIT license. See LICENSE file in the project root for full license information. -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudioEng.MicroBuild.Core" Version="1.0.0" PrivateAssets="all" />
+  </ItemGroup>
+  <Import Project="$(PublishRoot)\SignInputs.props" Condition="Exists('$(PublishRoot)\SignInputs.props') and '$(InstallerOnly)' != 'true'" />
+  <ItemGroup Condition="'$(InstallerOnly)' == 'true'">
+    <FilesToSign Include="$(PublishRoot)\msi\**\AccessibilityInsights.msi">
+      <Authenticode>Microsoft400</Authenticode>
+    </FilesToSign>
+  </ItemGroup>
+  <Target Name="RequireProtectedSigning" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(MicroBuildPluginDirectory)' == ''" Text="Production signing requires the protected MicroBuild signing pipeline." />
+    <Error Condition="'@(FilesToSign)' == ''" Text="No WinUI publish artifacts were selected for signing." />
+    <Error Condition="!Exists('$(PublishRoot)\layout\AccessibilityInsights.exe')" Text="The WinUI application must be published before signing." />
+  </Target>
+</Project>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) Microsoft. All rights reserved.
+     Licensed under the MIT license. See LICENSE file in the project root for full license information. -->
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="InspectNav.Content" xml:space="preserve"><value>Inspect</value></data>
+  <data name="ApplicationTitle" xml:space="preserve"><value>Accessibility Insights for Windows</value></data>
+  <data name="StartupFailed" xml:space="preserve"><value>Unable to start Accessibility Insights for Windows</value></data>
+  <data name="TestNav.Content" xml:space="preserve"><value>Test</value></data>
+  <data name="ContrastNav.Content" xml:space="preserve"><value>Color contrast</value></data>
+  <data name="PreviewNotice.Title" xml:space="preserve"><value>WinUI migration preview</value></data>
+  <data name="PreviewNotice.Message" xml:space="preserve"><value>Window inspection, automated checks, snapshot files, and manual color contrast are available. The WPF application remains the supported entry point while the remaining features are migrated.</value></data>
+  <data name="RefreshButton.Label" xml:space="preserve"><value>Refresh windows</value></data>
+  <data name="InspectButton.Label" xml:space="preserve"><value>Inspect</value></data>
+  <data name="RunTestsButton.Label" xml:space="preserve"><value>Run tests</value></data>
+  <data name="OpenButton.Label" xml:space="preserve"><value>Open</value></data>
+  <data name="SaveButton.Label" xml:space="preserve"><value>Save</value></data>
+  <data name="TargetWindow.Header" xml:space="preserve"><value>Target window</value></data>
+  <data name="TargetWindow.PlaceholderText" xml:space="preserve"><value>Select a window to inspect</value></data>
+  <data name="TargetWindow.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Target window</value></data>
+  <data name="HierarchyHeading.Text" xml:space="preserve"><value>UI Automation hierarchy</value></data>
+  <data name="PropertiesHeading.Text" xml:space="preserve"><value>Element properties</value></data>
+  <data name="TestsHeading.Text" xml:space="preserve"><value>Automated checks</value></data>
+  <data name="TestsInstructions.Text" xml:space="preserve"><value>Select a target in Inspect and choose Run tests. Failures from the existing axe-windows rule engine appear here.</value></data>
+  <data name="ContrastHeading.Text" xml:space="preserve"><value>Color contrast</value></data>
+  <data name="ForegroundHeading.Text" xml:space="preserve"><value>Foreground</value></data>
+  <data name="BackgroundHeading.Text" xml:space="preserve"><value>Background</value></data>
+  <data name="SelectTarget" xml:space="preserve"><value>Select a target window, then choose Inspect or Run tests.</value></data>
+  <data name="CaptureComplete" xml:space="preserve"><value>Capture complete; failed checks: {0}. See Test for details.</value></data>
+  <data name="InspectComplete" xml:space="preserve"><value>Inspection complete. Choose Run tests to run automated checks.</value></data>
+  <data name="Truncated" xml:space="preserve"><value>The element limit was exceeded. Results are incomplete and cannot be saved.</value></data>
+  <data name="Opened" xml:space="preserve"><value>Snapshot opened.</value></data>
+  <data name="Saved" xml:space="preserve"><value>Snapshot saved.</value></data>
+  <data name="OperationFailed" xml:space="preserve"><value>The operation failed. See the error message above.</value></data>
+  <data name="SnapshotFile" xml:space="preserve"><value>Accessibility Insights snapshot</value></data>
+  <data name="ContrastResult" xml:space="preserve"><value>{0:0.###}:1 | Normal text: {1} | Large text and non-text objects: {2}</value></data>
+  <data name="ContrastResultDetailed" xml:space="preserve"><value>{0:0.###}:1 | AA normal text: {1} | AA large text and non-text objects: {2} | AAA normal text: {3} | AAA large text: {1}</value></data>
+  <data name="ScreenPickForeground.Content" xml:space="preserve"><value>Pick foreground from screen</value></data>
+  <data name="ScreenPickBackground.Content" xml:space="preserve"><value>Pick background from screen</value></data>
+  <data name="ScreenPickInstructions" xml:space="preserve"><value>Click a screen pixel, or use the arrow keys and press Enter. Hold Shift to move 10 pixels. Press Esc to cancel.</value></data>
+  <data name="ScreenPickCancelled" xml:space="preserve"><value>Screen color selection cancelled.</value></data>
+  <data name="ScreenPickComplete" xml:space="preserve"><value>Screen color selected.</value></data>
+  <data name="ScreenPickFailed" xml:space="preserve"><value>Screen color selection failed.</value></data>
+  <data name="Pass" xml:space="preserve"><value>Pass</value></data>
+  <data name="Fail" xml:space="preserve"><value>Fail</value></data>
+  <data name="ShutdownFailed" xml:space="preserve"><value>Shutdown failed</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="InvalidHelpAddress" xml:space="preserve"><value>The rule does not provide a valid HTTPS help address.</value></data>
+  <data name="HelpOpenFailed" xml:space="preserve"><value>The help address could not be opened.</value></data>
+  <data name="ForegroundPicker.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Foreground color</value></data>
+  <data name="BackgroundPicker.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Background color</value></data>
+  <data name="ElementTree.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>UI Automation hierarchy</value></data>
+  <data name="ElementProperties.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Element properties</value></data>
+  <data name="RuleFailures.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Failed automated checks</value></data>
+  <data name="EventsNav.Content" xml:space="preserve"><value>Events</value></data>
+  <data name="TabStopsNav.Content" xml:space="preserve"><value>Tab stops</value></data>
+  <data name="EventsHeading.Text" xml:space="preserve"><value>Event recording</value></data>
+  <data name="RecordingError.Title" xml:space="preserve"><value>Recording error</value></data>
+  <data name="RecordingTargetHeading.Text" xml:space="preserve"><value>Target</value></data>
+  <data name="EventScope.Header" xml:space="preserve"><value>Scope</value></data>
+  <data name="EventScopeElement.Content" xml:space="preserve"><value>Element only</value></data>
+  <data name="EventScopeDescendants.Content" xml:space="preserve"><value>Descendants only</value></data>
+  <data name="EventScopeSubtree.Content" xml:space="preserve"><value>Element and descendants</value></data>
+  <data name="RefreshEventConfiguration.Content" xml:space="preserve"><value>Refresh</value></data>
+  <data name="ShowSelectedOptionsOnly.Content" xml:space="preserve"><value>Show selected options only</value></data>
+  <data name="EventFilter.Header" xml:space="preserve"><value>Events</value></data>
+  <data name="EventFilter.PlaceholderText" xml:space="preserve"><value>Filter by event name or ID</value></data>
+  <data name="SelectVisibleEvents.Content" xml:space="preserve"><value>Select all shown</value></data>
+  <data name="ClearEventSelection.Content" xml:space="preserve"><value>Clear</value></data>
+  <data name="EventSelectedColumn.Text" xml:space="preserve"><value>Record</value></data>
+  <data name="EventOptionIdColumn.Text" xml:space="preserve"><value>ID</value></data>
+  <data name="EventOptionNameColumn.Text" xml:space="preserve"><value>Event name</value></data>
+  <data name="PropertyFilter.Header" xml:space="preserve"><value>Properties</value></data>
+  <data name="PropertyFilter.PlaceholderText" xml:space="preserve"><value>Filter by property name or ID</value></data>
+  <data name="SelectVisibleProperties.Content" xml:space="preserve"><value>Select all shown</value></data>
+  <data name="ClearPropertySelection.Content" xml:space="preserve"><value>Clear</value></data>
+  <data name="PropertySelectedColumn.Text" xml:space="preserve"><value>Record</value></data>
+  <data name="PropertyOptionIdColumn.Text" xml:space="preserve"><value>ID</value></data>
+  <data name="RecordingPropertyNameColumn.Text" xml:space="preserve"><value>Property name</value></data>
+  <data name="StartEventRecording.Label" xml:space="preserve"><value>Start recording</value></data>
+  <data name="StopEventRecording.Label" xml:space="preserve"><value>Stop recording</value></data>
+  <data name="ClearEventRecords.Label" xml:space="preserve"><value>Clear events</value></data>
+  <data name="OpenEventRecords.Label" xml:space="preserve"><value>Open event file</value></data>
+  <data name="SaveEventRecords.Label" xml:space="preserve"><value>Save event file</value></data>
+  <data name="EventTimeColumn.Text" xml:space="preserve"><value>Time stamp</value></data>
+  <data name="EventIdColumn.Text" xml:space="preserve"><value>Event ID</value></data>
+  <data name="EventNameColumn.Text" xml:space="preserve"><value>Event name</value></data>
+  <data name="EventSenderColumn.Text" xml:space="preserve"><value>Sender</value></data>
+  <data name="NoRecordedEvents.Text" xml:space="preserve"><value>No events have been recorded. Select event types and start recording, or open an .a11yevent file.</value></data>
+  <data name="EventDetailsHeading.Text" xml:space="preserve"><value>Event and sender details</value></data>
+  <data name="TabStopsHeading.Text" xml:space="preserve"><value>Tab stops</value></data>
+  <data name="TabStopTargetHeading.Text" xml:space="preserve"><value>Target:</value></data>
+  <data name="TabStopInstructions.Text" xml:space="preserve"><value>Start recording, move keyboard focus through the target with Tab and Shift+Tab, and verify that focus order is logical and each interactive element has a visible focus indicator.</value></data>
+  <data name="StartTabStopRecording.Label" xml:space="preserve"><value>Start recording</value></data>
+  <data name="StopTabStopRecording.Label" xml:space="preserve"><value>Stop recording</value></data>
+  <data name="ClearTabStops.Label" xml:space="preserve"><value>Clear tab stops</value></data>
+  <data name="TabStopOrderColumn.Text" xml:space="preserve"><value>Order</value></data>
+  <data name="TabStopTimeColumn.Text" xml:space="preserve"><value>Time stamp</value></data>
+  <data name="TabStopElementColumn.Text" xml:space="preserve"><value>Element</value></data>
+  <data name="NoRecordedTabStops.Text" xml:space="preserve"><value>No tab stops have been recorded. Start recording and move focus through the selected target.</value></data>
+  <data name="RecordingNoTarget" xml:space="preserve"><value>No element selected</value></data>
+  <data name="RecordingReady" xml:space="preserve"><value>Ready to record.</value></data>
+  <data name="RecordingSelectElement" xml:space="preserve"><value>Select an element in Inspect before recording.</value></data>
+  <data name="RecordingConfigurationLoaded" xml:space="preserve"><value>Recording options loaded for {0}.</value></data>
+  <data name="EventRecordingStarted" xml:space="preserve"><value>Event recording started.</value></data>
+  <data name="EventRecordingStopped" xml:space="preserve"><value>Event recording stopped. Recorded events: {0}.</value></data>
+  <data name="EventRecordsCleared" xml:space="preserve"><value>Recorded events cleared.</value></data>
+  <data name="EventFileOpened" xml:space="preserve"><value>Opened {0} events.</value></data>
+  <data name="EventFileSaved" xml:space="preserve"><value>Event file saved.</value></data>
+  <data name="TabStopRecordingStarted" xml:space="preserve"><value>Tab stop recording started. Move focus through the selected target.</value></data>
+  <data name="TabStopRecordingStopped" xml:space="preserve"><value>Tab stop recording stopped. Recorded tab stops: {0}.</value></data>
+  <data name="TabStopsCleared" xml:space="preserve"><value>Recorded tab stops cleared.</value></data>
+  <data name="RecordingOperationFailed" xml:space="preserve"><value>The recording operation failed. See the error message above.</value></data>
+  <data name="EventRecordFile" xml:space="preserve"><value>Accessibility Insights event record</value></data>
+  <data name="RecordingBufferWarning.Title" xml:space="preserve"><value>Recording buffer limit reached</value></data>
+  <data name="EventBufferLimitReached" xml:space="preserve"><value>The oldest {0} events were removed to keep recording memory bounded.</value></data>
+  <data name="TabStopBufferLimitReached" xml:space="preserve"><value>The oldest {0} tab stops were removed to keep recording memory bounded.</value></data>
+  <data name="EventOptionsList.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Events available to record</value></data>
+  <data name="EventPropertyOptionsList.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Properties available to record</value></data>
+  <data name="RecordedEventsList.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Recorded events</value></data>
+  <data name="EventDetailsList.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Selected event details</value></data>
+  <data name="RecordedTabStopsList.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Recorded tab stop order</value></data>
+  <data name="LiveTrackingButton.Label" xml:space="preserve"><value>Live inspection</value></data>
+  <data name="PauseButton.Label" xml:space="preserve"><value>Pause</value></data>
+  <data name="HighlightButton.Label" xml:space="preserve"><value>Highlight</value></data>
+  <data name="ScreenshotButton.Label" xml:space="preserve"><value>Capture screenshot</value></data>
+  <data name="SaveScreenshotButton.Label" xml:space="preserve"><value>Save screenshot</value></data>
+  <data name="MoveParentButton.Label" xml:space="preserve"><value>Move to parent (Ctrl+Shift+F6)</value></data>
+  <data name="MoveFirstChildButton.Label" xml:space="preserve"><value>Move to first child (Ctrl+Shift+F7)</value></data>
+  <data name="MoveLastChildButton.Label" xml:space="preserve"><value>Move to last child (Ctrl+Shift+F9)</value></data>
+  <data name="MoveNextSiblingButton.Label" xml:space="preserve"><value>Move to next sibling (Ctrl+Shift+F8)</value></data>
+  <data name="MovePreviousSiblingButton.Label" xml:space="preserve"><value>Move to previous sibling (Ctrl+Shift+F5)</value></data>
+  <data name="SelectionScope.Header" xml:space="preserve"><value>Selection scope</value></data>
+  <data name="SelectionScope.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Selection scope</value></data>
+  <data name="ElementScope.Content" xml:space="preserve"><value>Element</value></data>
+  <data name="ApplicationScope.Content" xml:space="preserve"><value>Entire application</value></data>
+  <data name="SelectionMethodsHeading.Text" xml:space="preserve"><value>Select targets using</value></data>
+  <data name="MouseSelection.Content" xml:space="preserve"><value>Mouse</value></data>
+  <data name="FocusSelection.Content" xml:space="preserve"><value>Keyboard focus</value></data>
+  <data name="PropertiesTab.Header" xml:space="preserve"><value>Properties</value></data>
+  <data name="PatternsTab.Header" xml:space="preserve"><value>Patterns</value></data>
+  <data name="ScreenshotTab.Header" xml:space="preserve"><value>Screenshot</value></data>
+  <data name="ElementPatterns.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Element patterns</value></data>
+  <data name="ScreenshotEmpty.Text" xml:space="preserve"><value>Capture a screenshot of the selected element's window to preview it here.</value></data>
+  <data name="ScreenshotPreview.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Screenshot of the selected element's window</value></data>
+  <data name="LiveSelectionUpdated" xml:space="preserve"><value>Live selection updated.</value></data>
+  <data name="LiveSettingsUpdated" xml:space="preserve"><value>Live inspection settings updated.</value></data>
+  <data name="TrackingStarted" xml:space="preserve"><value>Live inspection started. Move the pointer or keyboard focus to an external application.</value></data>
+  <data name="TrackingStopped" xml:space="preserve"><value>Live inspection stopped.</value></data>
+  <data name="TrackingPaused" xml:space="preserve"><value>Live inspection paused.</value></data>
+  <data name="TrackingResumed" xml:space="preserve"><value>Live inspection resumed.</value></data>
+  <data name="ScreenshotUnavailable" xml:space="preserve"><value>A screenshot is not available for the selected element.</value></data>
+  <data name="ScreenshotCaptured" xml:space="preserve"><value>Screenshot captured.</value></data>
+  <data name="ScreenshotSaved" xml:space="preserve"><value>Screenshot saved.</value></data>
+  <data name="ScreenshotFile" xml:space="preserve"><value>PNG screenshot</value></data>
+  <data name="TreeNavigationUnavailable" xml:space="preserve"><value>The requested UI Automation tree target is not available.</value></data>
+  <data name="InvalidSelectionMethods" xml:space="preserve"><value>Select mouse, keyboard focus, or both.</value></data>
+  <data name="HotkeyRegistrationFailed" xml:space="preserve"><value>One or more live inspection hotkeys could not be registered:
+{0}</value></data>
+  <data name="SettingsNav.Content" xml:space="preserve"><value>Settings</value></data>
+  <data name="IssueReportingNav.Content" xml:space="preserve"><value>Issue reporting</value></data>
+  <data name="SettingsHeading.Text" xml:space="preserve"><value>Settings</value></data>
+  <data name="SettingsReleaseChannelWarning.Title" xml:space="preserve"><value>Release channel change</value></data>
+  <data name="SettingsReleaseChannelWarning.Message" xml:space="preserve"><value>Changing the release channel requires confirmation and may start the trusted version switcher after settings are saved.</value></data>
+  <data name="SettingsThemeHeading.Text" xml:space="preserve"><value>Theme and text</value></data>
+  <data name="SettingsThemeDescription.Text" xml:space="preserve"><value>Accessibility Insights follows the Windows light, dark, and contrast theme.</value></data>
+  <data name="SettingsFontSize.Header" xml:space="preserve"><value>Text size</value></data>
+  <data name="SettingsFontSmall.Content" xml:space="preserve"><value>Small</value></data>
+  <data name="SettingsFontStandard.Content" xml:space="preserve"><value>Standard</value></data>
+  <data name="SettingsShortcutsHeading.Text" xml:space="preserve"><value>Keyboard shortcuts</value></data>
+  <data name="SettingsShortcutsDescription.Text" xml:space="preserve"><value>Focus a shortcut field and press a modifier plus a key. Shortcut values must be unique.</value></data>
+  <data name="SettingsShortcutActivate.Header" xml:space="preserve"><value>Show or hide the main window</value></data>
+  <data name="SettingsShortcutInspect.Header" xml:space="preserve"><value>Inspect element</value></data>
+  <data name="SettingsShortcutRecord.Header" xml:space="preserve"><value>Start recording</value></data>
+  <data name="SettingsShortcutPause.Header" xml:space="preserve"><value>Pause recording</value></data>
+  <data name="SettingsShortcutParent.Header" xml:space="preserve"><value>Move to parent</value></data>
+  <data name="SettingsShortcutPreviousSibling.Header" xml:space="preserve"><value>Move to previous sibling</value></data>
+  <data name="SettingsShortcutNextSibling.Header" xml:space="preserve"><value>Move to next sibling</value></data>
+  <data name="SettingsShortcutFirstChild.Header" xml:space="preserve"><value>Move to first child</value></data>
+  <data name="SettingsShortcutLastChild.Header" xml:space="preserve"><value>Move to last child</value></data>
+  <data name="SettingsSelectionHeading.Text" xml:space="preserve"><value>Selection and tree</value></data>
+  <data name="SettingsSelectionFocus.Header" xml:space="preserve"><value>Select elements when keyboard focus changes</value></data>
+  <data name="SettingsSelectionMouse.Header" xml:space="preserve"><value>Select elements with the mouse</value></data>
+  <data name="SettingsMouseDelay.Header" xml:space="preserve"><value>Mouse selection delay (milliseconds)</value></data>
+  <data name="SettingsTreeMode.Header" xml:space="preserve"><value>UI Automation tree view</value></data>
+  <data name="SettingsTreeRaw.Content" xml:space="preserve"><value>Raw</value></data>
+  <data name="SettingsTreeControl.Content" xml:space="preserve"><value>Control</value></data>
+  <data name="SettingsTreeContent.Content" xml:space="preserve"><value>Content</value></data>
+  <data name="SettingsElementScope.Header" xml:space="preserve"><value>Inspect only the selected element</value></data>
+  <data name="SettingsFeedbackHeading.Text" xml:space="preserve"><value>Window and feedback</value></data>
+  <data name="SettingsAlwaysOnTop.Header" xml:space="preserve"><value>Keep Accessibility Insights on top</value></data>
+  <data name="SettingsSoundFeedback.Header" xml:space="preserve"><value>Sound feedback</value></data>
+  <data name="SettingsSoundAuto.Content" xml:space="preserve"><value>Automatic</value></data>
+  <data name="SettingsSoundAlways.Content" xml:space="preserve"><value>Always</value></data>
+  <data name="SettingsSoundNever.Content" xml:space="preserve"><value>Never</value></data>
+  <data name="SettingsHighlighter.Header" xml:space="preserve"><value>Highlighter display</value></data>
+  <data name="SettingsHighlighterBeakerTooltip.Content" xml:space="preserve"><value>Outline, beaker, and tooltip</value></data>
+  <data name="SettingsHighlighterBeaker.Content" xml:space="preserve"><value>Outline and beaker</value></data>
+  <data name="SettingsHighlighterTooltip.Content" xml:space="preserve"><value>Outline and tooltip</value></data>
+  <data name="SettingsHighlighterOnly.Content" xml:space="preserve"><value>Outline only</value></data>
+  <data name="SettingsTooltipOnly.Content" xml:space="preserve"><value>Tooltip only</value></data>
+  <data name="SettingsBehaviorHeading.Text" xml:space="preserve"><value>Inspection behavior</value></data>
+  <data name="SettingsWelcome.Header" xml:space="preserve"><value>Show the welcome screen on launch</value></data>
+  <data name="SettingsDisableSnapshotTests.Header" xml:space="preserve"><value>Disable automated checks in snapshot mode</value></data>
+  <data name="SettingsChromium.Header" xml:space="preserve"><value>Test all Chromium content</value></data>
+  <data name="SettingsAncestry.Header" xml:space="preserve"><value>Show full element ancestry</value></data>
+  <data name="SettingsAllProperties.Header" xml:space="preserve"><value>Show all UI Automation properties</value></data>
+  <data name="SettingsUncertain.Header" xml:space="preserve"><value>Show uncertain automated-check results</value></data>
+  <data name="SettingsWhitespace.Header" xml:space="preserve"><value>Show formatting symbols for whitespace in text patterns</value></data>
+  <data name="SettingsPrivacyHeading.Text" xml:space="preserve"><value>Privacy and updates</value></data>
+  <data name="SettingsTelemetry.Header" xml:space="preserve"><value>Allow diagnostic telemetry</value></data>
+  <data name="SettingsTelemetryDialog.Header" xml:space="preserve"><value>Show the telemetry notice on startup</value></data>
+  <data name="SettingsReleaseChannel.Header" xml:space="preserve"><value>Release channel</value></data>
+  <data name="SettingsChannelProduction.Content" xml:space="preserve"><value>Production</value></data>
+  <data name="SettingsChannelInsider.Content" xml:space="preserve"><value>Insider</value></data>
+  <data name="SettingsChannelCanary.Content" xml:space="preserve"><value>Canary</value></data>
+  <data name="SettingsPathsHeading.Text" xml:space="preserve"><value>Saved file locations</value></data>
+  <data name="SettingsTestReportPath.Header" xml:space="preserve"><value>Test report folder</value></data>
+  <data name="SettingsEventRecordPath.Header" xml:space="preserve"><value>Event recording folder</value></data>
+  <data name="SettingsResetButton.Content" xml:space="preserve"><value>Restore defaults</value></data>
+  <data name="SettingsSaveButton.Content" xml:space="preserve"><value>Save settings</value></data>
+  <data name="SettingsLoaded" xml:space="preserve"><value>Settings loaded.</value></data>
+  <data name="SettingsSaved" xml:space="preserve"><value>Settings saved.</value></data>
+  <data name="SettingsDefaultsReady" xml:space="preserve"><value>Default settings are ready to review. Choose Save settings to apply them.</value></data>
+  <data name="SettingsOperationFailed" xml:space="preserve"><value>The settings operation failed: {0}</value></data>
+  <data name="SettingsResetDialogTitle" xml:space="preserve"><value>Restore default settings?</value></data>
+  <data name="SettingsResetDialogMessage" xml:space="preserve"><value>This replaces the values shown on this page with the original defaults. Nothing is written until you choose Save settings.</value></data>
+  <data name="SettingsResetDialogPrimary" xml:space="preserve"><value>Restore defaults</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="IssueReportingHeading.Text" xml:space="preserve"><value>Issue reporting</value></data>
+  <data name="IssueReporterConfigurationHeading.Text" xml:space="preserve"><value>Connection</value></data>
+  <data name="IssueReporterSelector.Header" xml:space="preserve"><value>Issue reporting service</value></data>
+  <data name="IssueReporterGitHubName" xml:space="preserve"><value>GitHub</value></data>
+  <data name="IssueReporterAzureBoardsName" xml:space="preserve"><value>Azure Boards</value></data>
+  <data name="GitHubConfigurationHeading.Text" xml:space="preserve"><value>GitHub repository</value></data>
+  <data name="GitHubConfigurationDescription.Text" xml:space="preserve"><value>Enter the HTTPS repository address where the prepopulated issue should open, for example https://github.com/owner/repository.</value></data>
+  <data name="GitHubRepositoryLink.Header" xml:space="preserve"><value>Repository address</value></data>
+  <data name="AzureBoardsConfigurationHeading.Text" xml:space="preserve"><value>Azure Boards account</value></data>
+  <data name="AzureBoardsConfigurationDescription.Text" xml:space="preserve"><value>Connecting is an explicit action. Authentication uses Windows Web Account Manager, and tokens are never written to Accessibility Insights settings.</value></data>
+  <data name="AzureBoardsServerLink.Header" xml:space="preserve"><value>Azure DevOps organization or server address</value></data>
+  <data name="AzureBoardsConnectButton.Content" xml:space="preserve"><value>Connect</value></data>
+  <data name="AzureBoardsDisconnectButton.Content" xml:space="preserve"><value>Disconnect</value></data>
+  <data name="AzureBoardsProject.Header" xml:space="preserve"><value>Project</value></data>
+  <data name="AzureBoardsTeam.Header" xml:space="preserve"><value>Team (optional)</value></data>
+  <data name="IssueContextHeading.Text" xml:space="preserve"><value>Issue details</value></data>
+  <data name="IssueContextMissing.Title" xml:space="preserve"><value>No issue selected</value></data>
+  <data name="IssueContextMissing.Message" xml:space="preserve"><value>Open this page from an inspection or automated-check result to file a populated issue.</value></data>
+  <data name="IssueConfigurationSaveButton.Content" xml:space="preserve"><value>Save connection</value></data>
+  <data name="IssueFileButton.Content" xml:space="preserve"><value>File issue</value></data>
+  <data name="FileFailureIssue.Content" xml:space="preserve"><value>File issue</value></data>
+  <data name="IssueReportingLoaded" xml:space="preserve"><value>Issue reporting settings loaded. No network connection was made.</value></data>
+  <data name="AzureBoardsInvalidUrl" xml:space="preserve"><value>Enter a valid HTTPS Azure DevOps organization or server address.</value></data>
+  <data name="AzureBoardsConnected" xml:space="preserve"><value>Connected to Azure Boards.</value></data>
+  <data name="AzureBoardsSelectProject" xml:space="preserve"><value>Select an Azure Boards project.</value></data>
+  <data name="AzureBoardsTeamsLoaded" xml:space="preserve"><value>Azure Boards teams loaded.</value></data>
+  <data name="AzureBoardsDisconnected" xml:space="preserve"><value>Disconnected from Azure Boards.</value></data>
+  <data name="IssueReporterRequired" xml:space="preserve"><value>Select an issue reporting service.</value></data>
+  <data name="GitHubInvalidUrl" xml:space="preserve"><value>Enter a valid HTTPS GitHub repository address.</value></data>
+  <data name="IssueConfigurationSaved" xml:space="preserve"><value>Issue reporting connection saved.</value></data>
+  <data name="IssueContextRequired" xml:space="preserve"><value>Select an inspection result before filing an issue.</value></data>
+  <data name="IssueFiledWithIdentifier" xml:space="preserve"><value>Issue {0} was filed.</value></data>
+  <data name="IssueReporterOpened" xml:space="preserve"><value>The issue reporting service was opened.</value></data>
+  <data name="AzureBoardsReporterRequired" xml:space="preserve"><value>Select Azure Boards before connecting.</value></data>
+  <data name="IssueReportingOperationFailed" xml:space="preserve"><value>The issue reporting operation failed: {0}</value></data>
+  <data name="AzureBoardsIssueBrowserAutomationName" xml:space="preserve"><value>Azure Boards issue editor</value></data>
+  <data name="AzureBoardsZoomOut" xml:space="preserve"><value>Zoom out</value></data>
+  <data name="AzureBoardsZoomIn" xml:space="preserve"><value>Zoom in</value></data>
+  <data name="AzureBoardsIssueBrowserTitle" xml:space="preserve"><value>File an Azure Boards issue</value></data>
+  <data name="StartupUpdateAutomationName" xml:space="preserve"><value>There is an update available</value></data>
+  <data name="StartupUpdateRequired.Title" xml:space="preserve"><value>An update is required</value></data>
+  <data name="StartupUpdateOptional.Title" xml:space="preserve"><value>An update is available</value></data>
+  <data name="StartupUpdateReleaseNotes.Content" xml:space="preserve"><value>View the release notes here.</value></data>
+  <data name="StartupUpdateNow.Content" xml:space="preserve"><value>Update now</value></data>
+  <data name="StartupUpdateLater.Content" xml:space="preserve"><value>Later</value></data>
+  <data name="StartupUpdateClose.Content" xml:space="preserve"><value>Close</value></data>
+  <data name="StartupUpdateOptionalFailure" xml:space="preserve"><value>There was a problem updating the application. Please check your internet connection and try again.</value></data>
+  <data name="StartupUpdateRequiredFailure" xml:space="preserve"><value>There was a problem updating the application. Because this is a required update, the app will be shut down. Please check your internet connection and try again.</value></data>
+  <data name="StartupUpdateCheckFailed.Title" xml:space="preserve"><value>Unable to check for updates</value></data>
+  <data name="StartupUpdateCheckFailed.Message" xml:space="preserve"><value>The signed update manifest could not be loaded or verified.</value></data>
+  <data name="StartupUpdatePolicyBlocked.Title" xml:space="preserve"><value>Update checks are managed by your administrator</value></data>
+  <data name="StartupUpdatePolicyBlocked.Message" xml:space="preserve"><value>Startup update checks are disabled by policy.</value></data>
+  <data name="StartupUpdateAvailableVersion" xml:space="preserve"><value>Version {0} is available.</value></data>
+  <data name="StartupUpdateRequiredDescription" xml:space="preserve"><value>Update to continue using Accessibility Insights for Windows.</value></data>
+</root>

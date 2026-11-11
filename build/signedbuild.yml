@@ -30,10 +30,8 @@ extends:
         # #1903: Hold BinSkim back at 4.3.1 to resolve a pipeline incompatibility
         preReleaseVersion: ''
         # If you modify this list, you also need to modify the list in the Run BinSkim task in Signed Release Job or vice-versa to keep them in sync
-        analyzeTargetGlob: "src\\AccessibilityInsights\\**\\*.exe;\
-                            src\\AccessibilityInsights\\**\\AccessibilityInsights.*.dll;\
-                            src\\AccessibilityInsights.VersionSwitcher\\**\\*.exe;\
-                            src\\AccessibilityInsights.VersionSwitcher\\**\\AccessibilityInsights.*.dll;\
+        analyzeTargetGlob: "artifacts\\winui\\**\\layout\\**\\AccessibilityInsights*.exe;\
+                            artifacts\\winui\\**\\layout\\**\\AccessibilityInsights*.dll;\
                             src\\Manifest\\**\\AccessibilityInsights.*.dll;"
     stages:
     - stage: Stage
@@ -68,6 +66,12 @@ extends:
 
         - task: NuGetAuthenticate@1
           displayName: 'Authenticate to NuGet feeds'
+
+        - task: UseDotNet@2
+          displayName: 'Use .NET 10 SDK'
+          inputs:
+            packageType: sdk
+            version: '10.0.x'
 
         - task: NuGetCommand@2
           displayName: 'NuGet restore'
@@ -136,6 +140,12 @@ extends:
 
         - task: NuGetAuthenticate@1
           displayName: 'Authenticate to NuGet feeds'
+
+        - task: UseDotNet@2
+          displayName: 'Use .NET 10 SDK'
+          inputs:
+            packageType: sdk
+            version: '10.0.x'
 
         - task: NuGetCommand@2
           displayName: 'NuGet restore'
@@ -232,6 +242,30 @@ extends:
             GdnPublishTsaOnboard: true
             GdnPublishTsaConfigFile: '$(Build.SourcesDirectory)\tsa.config'
 
+      - job: WinUICompliance
+        steps:
+        - task: UseDotNet@2
+          displayName: 'Use .NET 10 SDK'
+          inputs:
+            packageType: sdk
+            version: '10.0.x'
+        - task: NuGetAuthenticate@1
+          displayName: 'Authenticate to NuGet feeds'
+        - task: PowerShell@2
+          displayName: 'Build and test the WinUI product'
+          inputs:
+            pwsh: true
+            targetType: inline
+            script: |
+              dotnet restore .\src\AccessibilityInsights.WinUI.slnx
+              if ($LASTEXITCODE) { exit $LASTEXITCODE }
+              dotnet build .\src\AccessibilityInsights.WinUI.slnx -c Release -p:Platform=x64 --no-restore
+              if ($LASTEXITCODE) { exit $LASTEXITCODE }
+              dotnet build .\src\AccessibilityInsights.WinUITestTarget\AccessibilityInsights.WinUITestTarget.csproj -c Debug -p:Platform=x64 --no-restore
+              if ($LASTEXITCODE) { exit $LASTEXITCODE }
+              dotnet test .\src\AccessibilityInsights.WinUITests\AccessibilityInsights.WinUITests.csproj -c Release -p:Platform=x64 --no-restore
+              exit $LASTEXITCODE
+
       - job: SignedRelease
         templateContext:
           mb:
@@ -246,7 +280,7 @@ extends:
             PathtoPublish: $(Build.ArtifactStagingDirectory)\drop
             ArtifactName: drop
           - output: buildArtifacts
-            PathtoPublish: $(Build.ArtifactStagingDirectory)\msi\src\MSI\bin\x86\Release\msi
+            PathtoPublish: $(Build.ArtifactStagingDirectory)\msi
             ArtifactName: msi
           - output: buildArtifacts
             PathtoPublish: $(Build.ArtifactStagingDirectory)\manifest\src\Manifest\bin\Release\net48\
@@ -258,11 +292,13 @@ extends:
         dependsOn: 
         - ComplianceRelease
         - ComplianceDebug
+        - WinUICompliance
         condition: and(succeeded(), succeeded())
         variables:
           runCodesignValidationInjection: 'true'
           SignAppForRelease: 'true'
           GDN_CODESIGN_TARGETDIRECTORY: '$(Build.ArtifactStagingDirectory)\SigningValidation'
+          WinUIPublishRoot: '$(Build.SourcesDirectory)\artifacts\winui\$(Build.BuildId)'
 
         steps:
         - task: NuGetToolInstaller@1
@@ -277,6 +313,12 @@ extends:
 
         - task: NuGetAuthenticate@1
           displayName: 'Authenticate to NuGet feeds'
+
+        - task: UseDotNet@2
+          displayName: 'Use .NET 10 SDK'
+          inputs:
+            packageType: sdk
+            version: '10.0.x'
 
         - task: NuGetCommand@2
           displayName: 'NuGet restore'
@@ -303,30 +345,74 @@ extends:
               outputfile: '$(System.DefaultWorkingDirectory)/thirdpartynotices.html'
               outputformat: html
 
+        - task: PowerShell@2
+          displayName: 'Publish the self-contained WinUI MSI layout'
+          inputs:
+            pwsh: true
+            targetType: inline
+            script: |
+              $revision = [int]($env:BUILD_BUILDNUMBER.Split('.')[-1])
+              $days = ([DateTime]::Today - [DateTime]::new(2017, 1, 1)).Days
+              $version = "1.1.$days.$revision"
+              Write-Host "##vso[task.setvariable variable=WinUIVersion]$version"
+              & .\tools\scripts\Publish-WinUI.ps1 -OutputDirectory "$(WinUIPublishRoot)" -Version $version -LayoutOnly
+
         - task: VSBuild@1
-          displayName: 'Build Solution **\AccessibilityInsights.sln'
+          displayName: 'Sign the WinUI layout with protected production signing'
           inputs:
-            vsVersion: 17.0
-            platform: '$(BuildPlatform)'
-            configuration: SignedRelease
-            solution: '**/AccessibilityInsights.sln'  # we only want to build AccessibilityInsights for signing
+            vsVersion: latest
+            platform: AnyCPU
+            configuration: Release
+            solution: build\SignWinUI.proj
+            msbuildArgs: '/restore /p:PublishRoot="$(WinUIPublishRoot)"'
+
+        - task: PowerShell@2
+          displayName: 'Verify signed payloads and build the WinUI MSI'
+          inputs:
+            pwsh: true
+            targetType: inline
+            script: |
+              & .\tools\scripts\Test-WinUISignatures.ps1 -OutputDirectory "$(WinUIPublishRoot)"
+              & .\tools\scripts\Publish-WinUI.ps1 -OutputDirectory "$(WinUIPublishRoot)" -Version "$(WinUIVersion)" -MsiOnly
+              & .\tools\scripts\Test-WinUIInstaller.ps1 -MsiPath "$(WinUIPublishRoot)\msi\$(WinUIVersion)\AccessibilityInsights.msi" -LayoutDirectory "$(WinUIPublishRoot)\layout"
+
+        - task: VSBuild@1
+          displayName: 'Sign the WinUI MSI with protected production signing'
+          inputs:
+            vsVersion: latest
+            platform: AnyCPU
+            configuration: Release
+            solution: build\SignWinUI.proj
+            msbuildArgs: '/restore /p:PublishRoot="$(WinUIPublishRoot)" /p:InstallerOnly=true'
+
+        - task: PowerShell@2
+          displayName: 'Verify the signed WinUI MSI'
+          inputs:
+            targetType: filePath
+            filePath: tools\scripts\Test-WinUISignatures.ps1
+            arguments: '-OutputDirectory "$(WinUIPublishRoot)" -InstallerOnly'
+
+        - task: VSBuild@1
+          displayName: 'Build release metadata from the signed WinUI MSI'
+          inputs:
+            vsVersion: latest
+            platform: AnyCPU
+            configuration: Release
+            solution: src\Manifest\Manifest.csproj
+            msbuildArgs: '/restore /p:MsiBasePath="$(WinUIPublishRoot)\msi"'
 
         - task: CopyFiles@2
-          displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+          displayName: 'Publish the WinUI application layout'
           inputs:
-            Contents: '**\bin\release\**'
-            TargetFolder: '$(Build.ArtifactStagingDirectory)\drop'
-
-        - task: CopyFiles@2
-          displayName: 'Copy MSI file to: $(Build.ArtifactStagingDirectory)'
-          inputs:
-            Contents: '**\MSI\bin\x86\Release\**'
+            SourceFolder: '$(WinUIPublishRoot)\layout'
+            Contents: '**'
             TargetFolder: '$(Build.ArtifactStagingDirectory)\drop'
 
         - task: CopyFiles@2
           displayName: 'Copy msi to: $(Build.ArtifactStagingDirectory)'
           inputs:
-            Contents: '**\src\MSI\bin\x86\Release\msi\**'
+            SourceFolder: '$(WinUIPublishRoot)\msi'
+            Contents: '**'
             TargetFolder: '$(Build.ArtifactStagingDirectory)\msi'
         
         - task: CopyFiles@2
@@ -347,10 +433,8 @@ extends:
             InputType: Basic
             # Double-quote syntax with trailing backslash on each line concatenates lines without spaces
             # If you modify this list, you also need to modify the list in the sdl: binskim parameter of the 1ES template or vice-versa to keep them in sync
-            AnalyzeTargetGlob: "src\\AccessibilityInsights\\bin\\Release\\net48\\*.exe;\
-                                src\\AccessibilityInsights\\bin\\Release\\net48\\AccessibilityInsights.*.dll;\
-                                src\\AccessibilityInsights.VersionSwitcher\\bin\\Release\\net48\\*.exe;\
-                                src\\AccessibilityInsights.VersionSwitcher\\bin\\Release\\net48\\AccessibilityInsights.*.dll;\
+            AnalyzeTargetGlob: "artifacts\\winui\\**\\layout\\**\\AccessibilityInsights*.exe;\
+                                artifacts\\winui\\**\\layout\\**\\AccessibilityInsights*.dll;\
                                 src\\Manifest\\bin\\Release\\net48\\AccessibilityInsights.*.dll;"
 
         - task: securedevelopmentteam.vss-secure-development-tools.build-task-report.SdtReport@2
@@ -362,17 +446,16 @@ extends:
         - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
           displayName: 'Post Analysis (BinSkim)'
 
-        - task: VSTest@2
-          displayName: 'Test Assemblies **\release\*test*.dll;-:**\obj\**'
+        - task: PowerShell@2
+          displayName: 'Run WinUI compatibility tests'
           inputs:
-            testAssemblyVer2: |
-              **\*test*.dll
-              !**\obj\**
-            codeCoverageEnabled: false
-            platform: '$(BuildPlatform)'
-            configuration: release
-            rerunFailedTests: true
-            testFiltercriteria: 'TestCategory!=NoStrongName'
+            pwsh: true
+            targetType: inline
+            script: |
+              dotnet build .\src\AccessibilityInsights.WinUITestTarget\AccessibilityInsights.WinUITestTarget.csproj -c Debug -p:Platform=x64 --no-restore
+              if ($LASTEXITCODE) { exit $LASTEXITCODE }
+              dotnet test .\src\AccessibilityInsights.WinUITests\AccessibilityInsights.WinUITests.csproj -c Release -p:Platform=x64 --no-restore --filter "TestCategory!=NoStrongName"
+              exit $LASTEXITCODE
 
         - task: PowerShell@2
           displayName: 'Create tsa.config file (BinSkim)'
@@ -391,11 +474,16 @@ extends:
         - task: CopyFiles@2
           displayName: 'Copy Files for Signing Validation'
           inputs:
-            SourceFolder: '$(Build.SourcesDirectory)\src'
+            SourceFolder: '$(WinUIPublishRoot)'
             Contents: |
-              AccessibilityInsights\bin\Release\net48\**\?(*.exe|*.dll)
-              AccessibilityInsights.VersionSwitcher\bin\Release\net48\**\?(*.exe|*.dll)
-              !AccessibilityInsights.VersionSwitcher\bin\Release\net48\**\?(Microsoft.Deployment.WindowsInstaller.dll|Newtonsoft.Json.dll)
-              MSI\bin\Release\msi\**\AccessibilityInsights.msi
-              Manifest\bin\Release\net48\AccessibilityInsights.Manifest.dll
+              layout\**\?(*.exe|*.dll)
+              customaction\AccessibilityInsights.CustomActions.CA.dll
+              msi\**\AccessibilityInsights.msi
             TargetFolder: '$(Build.ArtifactStagingDirectory)\SigningValidation'
+
+        - task: CopyFiles@2
+          displayName: 'Copy release metadata for signing validation'
+          inputs:
+            SourceFolder: '$(Build.SourcesDirectory)\src\Manifest\bin\Release\net48'
+            Contents: AccessibilityInsights.Manifest.dll
+            TargetFolder: '$(Build.ArtifactStagingDirectory)\SigningValidation\metadata'

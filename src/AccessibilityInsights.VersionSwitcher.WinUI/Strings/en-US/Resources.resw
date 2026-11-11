@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) Microsoft. All rights reserved.
+     Licensed under the MIT license. See LICENSE file in the project root for full license information. -->
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="UpdaterTitle" xml:space="preserve"><value>Accessibility Insights for Windows - Update</value></data>
+  <data name="UpdaterHeading.Text" xml:space="preserve"><value>Updating Accessibility Insights for Windows</value></data>
+  <data name="UpdaterProgress.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Installation progress</value></data>
+  <data name="ProgressIndicatorFormat" xml:space="preserve"><value>Update {0}% complete</value></data>
+  <data name="InstallError" xml:space="preserve"><value>An error occurred during install</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="UnableToCompleteInstallation" xml:space="preserve"><value>Unable to complete the installation. Please restart your computer and try again. If that does not resolve the issue, try removing Accessibility Insights for Windows via the control panel and install it from www.accessibilityinsights.io.</value></data>
+</root>

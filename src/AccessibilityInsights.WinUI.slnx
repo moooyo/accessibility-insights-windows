@@ -1,0 +1,13 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="AccessibilityInsights.Core/AccessibilityInsights.Core.csproj" />
+  <Project Path="AccessibilityInsights.WinUI/AccessibilityInsights.WinUI.csproj" />
+  <Project Path="AccessibilityInsights.WinUITests/AccessibilityInsights.WinUITests.csproj" />
+  <Project Path="AccessibilityInsights.WinUITestTarget/AccessibilityInsights.WinUITestTarget.csproj" />
+  <Project Path="AccessibilityInsights.Win32.Portable\Win32.Portable.csproj" />
+  <Project Path="AccessibilityInsights.SetupLibrary.Portable\SetupLibrary.Portable.csproj" />
+  <Project Path="AccessibilityInsights.UpdateEngine\AccessibilityInsights.UpdateEngine.csproj" />
+  <Project Path="AccessibilityInsights.VersionSwitcher.WinUI\AccessibilityInsights.VersionSwitcher.WinUI.csproj" />
+</Solution>

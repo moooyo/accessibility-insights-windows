@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>AccessibilityInsights.VersionSwitcher</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\AccessibilityInsights.VersionSwitcher\InstallationEngine.cs" Link="InstallationEngine.cs" />
+    <Compile Include="..\AccessibilityInsights.VersionSwitcher\InstallationOptions.cs" Link="InstallationOptions.cs" />
+    <Compile Include="..\AccessibilityInsights.VersionSwitcher\ResultExecutionWrapper.cs" Link="ResultExecutionWrapper.cs" />
+    <Compile Include="..\AccessibilityInsights.VersionSwitcher\ResultBearingException.cs" Link="ResultBearingException.cs" />
+    <Compile Include="..\AccessibilityInsights.VersionSwitcher\Properties\Resources.Designer.cs" Link="Properties\Resources.Designer.cs" />
+    <EmbeddedResource Include="..\AccessibilityInsights.VersionSwitcher\Properties\Resources.resx" Link="Properties\Resources.resx" />
+    <ProjectReference Include="..\AccessibilityInsights.SetupLibrary.Portable\SetupLibrary.Portable.csproj" />
+    <InternalsVisibleTo Include="AccessibilityInsights.VersionSwitcher" />
+    <InternalsVisibleTo Include="AccessibilityInsights.WinUITests" />
+  </ItemGroup>
+</Project>

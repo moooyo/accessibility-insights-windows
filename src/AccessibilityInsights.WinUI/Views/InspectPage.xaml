@@ -1,0 +1,256 @@
+﻿<!-- Copyright (c) Microsoft. All rights reserved.
+     Licensed under the MIT license. See LICENSE file in the project root for full license information.-->
+<Page
+    x:Class="AccessibilityInsights_WinUI.Views.InspectPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="using:AccessibilityInsights.Core"
+    xmlns:local="using:AccessibilityInsights_WinUI.Views"
+    x:DefaultBindMode="OneWay"
+    NavigationCacheMode="Required">
+    <Grid RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <CommandBar DefaultLabelPosition="Right" HorizontalAlignment="Left">
+            <AppBarButton
+                x:Uid="RefreshButton"
+                AutomationProperties.AutomationId="RefreshWindows"
+                Command="{x:Bind ViewModel.RefreshWindowsCommand}"
+                Icon="Refresh" />
+            <AppBarButton
+                x:Uid="InspectButton"
+                AutomationProperties.AutomationId="InspectWindow"
+                Command="{x:Bind ViewModel.InspectCommand}"
+                Icon="Find" />
+            <AppBarButton
+                x:Uid="RunTestsButton"
+                AutomationProperties.AutomationId="RunTests"
+                Command="{x:Bind ViewModel.TestCommand}"
+                Icon="Accept" />
+            <AppBarSeparator />
+            <AppBarToggleButton
+                x:Uid="LiveTrackingButton"
+                AutomationProperties.AutomationId="ToggleLiveTracking"
+                Command="{x:Bind ViewModel.ToggleTrackingCommand}"
+                Icon="Play"
+                IsChecked="{x:Bind ViewModel.IsTracking}" />
+            <AppBarToggleButton
+                x:Uid="PauseButton"
+                AutomationProperties.AutomationId="ToggleTrackingPause"
+                Command="{x:Bind ViewModel.TogglePauseCommand}"
+                Icon="Pause"
+                IsChecked="{x:Bind ViewModel.IsPaused}" />
+            <AppBarToggleButton
+                x:Uid="HighlightButton"
+                AutomationProperties.AutomationId="ToggleHighlight"
+                Command="{x:Bind ViewModel.ToggleHighlightCommand}"
+                Icon="Highlight"
+                IsChecked="{x:Bind ViewModel.IsHighlightEnabled}" />
+            <AppBarButton
+                x:Uid="ScreenshotButton"
+                AutomationProperties.AutomationId="CaptureScreenshot"
+                Command="{x:Bind ViewModel.CaptureScreenshotCommand}"
+                Icon="Camera" />
+            <CommandBar.SecondaryCommands>
+                <AppBarButton
+                    x:Uid="SaveScreenshotButton"
+                    AutomationProperties.AutomationId="SaveScreenshot"
+                    Click="OnSaveScreenshotClicked"
+                    Icon="Save"
+                    IsEnabled="{x:Bind ViewModel.HasScreenshot}" />
+                <AppBarSeparator />
+                <AppBarButton
+                    x:Uid="MoveParentButton"
+                    Click="OnNavigateClicked"
+                    Tag="Parent" />
+                <AppBarButton
+                    x:Uid="MoveFirstChildButton"
+                    Click="OnNavigateClicked"
+                    Tag="FirstChild" />
+                <AppBarButton
+                    x:Uid="MoveLastChildButton"
+                    Click="OnNavigateClicked"
+                    Tag="LastChild" />
+                <AppBarButton
+                    x:Uid="MoveNextSiblingButton"
+                    Click="OnNavigateClicked"
+                    Tag="NextSibling" />
+                <AppBarButton
+                    x:Uid="MovePreviousSiblingButton"
+                    Click="OnNavigateClicked"
+                    Tag="PreviousSibling" />
+                <AppBarSeparator />
+                <AppBarButton
+                    x:Uid="OpenButton"
+                    AutomationProperties.AutomationId="OpenSnapshot"
+                    Command="{x:Bind ViewModel.OpenCommand}"
+                    Icon="OpenFile">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="O" Modifiers="Control" />
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+                <AppBarButton
+                    x:Uid="SaveButton"
+                    AutomationProperties.AutomationId="SaveSnapshot"
+                    Command="{x:Bind ViewModel.SaveCommand}"
+                    Icon="Save">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="S" Modifiers="Control" />
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+
+        <Grid Grid.Row="1" ColumnSpacing="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="320" />
+                <ColumnDefinition Width="180" />
+                <ColumnDefinition Width="220" />
+            </Grid.ColumnDefinitions>
+            <ComboBox
+                x:Uid="TargetWindow"
+                AutomationProperties.AutomationId="TargetWindow"
+                HorizontalAlignment="Stretch"
+                ItemsSource="{x:Bind ViewModel.Windows}"
+                SelectedItem="{x:Bind ViewModel.SelectedWindow, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="core:TargetWindow">
+                        <TextBlock Text="{x:Bind DisplayName, Mode=OneTime}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ComboBox
+                x:Name="SelectionScope"
+                x:Uid="SelectionScope"
+                Grid.Column="1"
+                AutomationProperties.AutomationId="SelectionScope"
+                SelectionChanged="OnSelectionScopeChanged">
+                <ComboBoxItem x:Uid="ElementScope" />
+                <ComboBoxItem x:Uid="ApplicationScope" />
+            </ComboBox>
+            <StackPanel Grid.Column="2" Spacing="4">
+                <TextBlock x:Uid="SelectionMethodsHeading" />
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <CheckBox
+                        x:Name="MouseSelection"
+                        x:Uid="MouseSelection"
+                        Click="OnSelectionMethodChanged"
+                        IsChecked="{x:Bind ViewModel.TrackMouse}" />
+                    <CheckBox
+                        x:Name="FocusSelection"
+                        x:Uid="FocusSelection"
+                        Click="OnSelectionMethodChanged"
+                        IsChecked="{x:Bind ViewModel.TrackKeyboardFocus}" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2" ColumnSpacing="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" MinWidth="320" />
+                <ColumnDefinition Width="3*" MinWidth="420" />
+            </Grid.ColumnDefinitions>
+            <Grid RowSpacing="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock x:Uid="HierarchyHeading" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <TreeView
+                    x:Name="Hierarchy"
+                    x:Uid="ElementTree"
+                    Grid.Row="1"
+                    AutomationProperties.AutomationId="ElementTree"
+                    ItemsSource="{x:Bind ViewModel.Roots}"
+                    SelectionChanged="OnElementSelected"
+                    SelectionMode="Single">
+                    <TreeView.ItemTemplate>
+                        <DataTemplate x:DataType="core:ElementSnapshot">
+                            <TreeViewItem
+                                Content="{x:Bind DisplayName, Mode=OneTime}"
+                                ItemsSource="{x:Bind Children, Mode=OneTime}" />
+                        </DataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </Grid>
+
+            <TabView
+                Grid.Column="1"
+                IsAddTabButtonVisible="False"
+                TabWidthMode="Equal">
+                <TabViewItem x:Uid="PropertiesTab" IsClosable="False">
+                    <ListView
+                        x:Uid="ElementProperties"
+                        AutomationProperties.AutomationId="ElementProperties"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        ItemsSource="{x:Bind ViewModel.Properties}"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ScrollViewer.HorizontalScrollMode="Disabled"
+                        SelectionMode="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="core:ElementProperty">
+                                <Grid
+                                    HorizontalAlignment="Stretch"
+                                    Padding="0,6"
+                                    ColumnSpacing="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="170" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{x:Bind Name, Mode=OneTime}" TextWrapping="Wrap" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Stretch"
+                                        IsTextSelectionEnabled="True"
+                                        Text="{x:Bind Value, Mode=OneTime}"
+                                        TextWrapping="Wrap" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </TabViewItem>
+                <TabViewItem x:Uid="PatternsTab" IsClosable="False">
+                    <ListView
+                        x:Uid="ElementPatterns"
+                        AutomationProperties.AutomationId="ElementPatterns"
+                        ItemsSource="{x:Bind ViewModel.Patterns}"
+                        SelectionMode="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="core:ElementPattern">
+                                <StackPanel Padding="0,8" Spacing="6">
+                                    <TextBlock FontWeight="SemiBold" Text="{x:Bind Name, Mode=OneTime}" TextWrapping="Wrap" />
+                                    <ItemsControl ItemsSource="{x:Bind Properties, Mode=OneTime}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="core:ElementProperty">
+                                                <Grid Padding="12,3,0,3" ColumnSpacing="12">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="158" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{x:Bind Name, Mode=OneTime}" TextWrapping="Wrap" />
+                                                    <TextBlock
+                                                        Grid.Column="1"
+                                                        IsTextSelectionEnabled="True"
+                                                        Text="{x:Bind Value, Mode=OneTime}"
+                                                        TextWrapping="Wrap" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </TabViewItem>
+                <TabViewItem x:Uid="ScreenshotTab" IsClosable="False">
+                    <local:ScreenshotView x:Name="ScreenshotPreview" />
+                </TabViewItem>
+            </TabView>
+        </Grid>
+    </Grid>
+</Page>

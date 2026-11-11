@@ -56,15 +56,35 @@ namespace AccessibilityInsights.SetupLibrary
             try
             {
                 string installedFolder = GetInstalledVersionSwitcherFolder();
+                if (File.Exists(Path.Combine(installedFolder, "AccessibilityInsights.VersionSwitcher.runtimeconfig.json")))
+                {
+                    var installedStart = new ProcessStartInfo
+                    {
+                        FileName = Path.Combine(installedFolder, "AccessibilityInsights.VersionSwitcher.exe"),
+                        Arguments = GetVersionSwitcherArguments(installerUri, newChannel, msiSizeInBytes, msiSha512),
+                        UseShellExecute = true,
+                        Verb = "runas"
+                    };
+                    if (Process.Start(installedStart) == null)
+                    {
+                        throw new InvalidOperationException("The installed update helper did not start.");
+                    }
+                    return;
+                }
                 string temporaryFolder = GetTemporaryVersionSwitcherFolder();
                 RemoveFolder(temporaryFolder);
                 TreeCopy(installedFolder, temporaryFolder, fileLocks);
                 ProcessStartInfo start = new ProcessStartInfo
                 {
                     FileName = Path.Combine(temporaryFolder, "AccessibilityInsights.VersionSwitcher.exe"),
-                    Arguments = GetVersionSwitcherArguments(installerUri, newChannel, msiSizeInBytes, msiSha512)
+                    Arguments = GetVersionSwitcherArguments(installerUri, newChannel, msiSizeInBytes, msiSha512),
+                    UseShellExecute = true,
+                    Verb = "runas"
                 };
-                Process.Start(start);
+                if (Process.Start(start) == null)
+                {
+                    throw new InvalidOperationException("The update helper did not start.");
+                }
             }
             finally
             {
@@ -156,7 +176,7 @@ namespace AccessibilityInsights.SetupLibrary
         private static string GetTemporaryVersionSwitcherFolder()
         {
             string tempPath = Path.GetTempPath();
-            return Path.Combine(tempPath, "VersionSwitcher");
+            return Path.Combine(tempPath, "AccessibilityInsights-VersionSwitcher-" + Guid.NewGuid().ToString("N"));
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <MsiBasePath Condition="'$(MsiBasePath)' == ''">$(MSBuildProjectDirectory)\..\MSI\bin\x86\Release\msi</MsiBasePath>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -22,11 +23,11 @@
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="powershell -f $(SolutionDir)..\tools\scripts\create-json-for-manifest.ps1 -Verbose -OctokitRelativePath Octokit\14.0.0\lib\netstandard2.0\Octokit.dll -MsiBasePath $(SolutionDir)MSI\bin\x86\Release\msi -IsMandatoryProdUpdate $(IsMandatoryProdUpdate) -OutputPath $(TargetDir) -OutputFile ReleaseInfo.json" />
+    <Exec Command="powershell -NoProfile -File &quot;$(MSBuildProjectDirectory)\..\..\tools\scripts\create-json-for-manifest.ps1&quot; -Verbose -OctokitRelativePath Octokit\14.0.0\lib\netstandard2.0\Octokit.dll -MsiBasePath &quot;$(MsiBasePath)&quot; -IsMandatoryProdUpdate $(IsMandatoryProdUpdate) -OutputPath &quot;$(TargetDir).&quot; -OutputFile ReleaseInfo.json" />
   </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="del $(TargetDir)Octokit.dll" />
+    <Delete Files="$(TargetDir)Octokit.dll" />
   </Target>
 
 </Project>

@@ -151,6 +151,11 @@ namespace AccessibilityInsights.VersionSwitcher
             try
             {
                 string appPath = Path.GetDirectoryName(MsiUtilities.GetAppInstalledPath());
+                string enabledAppHost = Path.Combine(appPath, "AccessibilityInsights.UIAccess.Enabled.exe");
+                if (File.Exists(enabledAppHost))
+                {
+                    File.Copy(enabledAppHost, Path.Combine(appPath, "AccessibilityInsights.exe"), true);
+                }
                 string enabledManifestContents = File.ReadAllText(Path.Combine(appPath, EnabledManifestFile));
                 File.WriteAllText(Path.Combine(appPath, AppManifestFile), enabledManifestContents, System.Text.Encoding.UTF8);
                 _history.AddLocalDetail("UIAccess has been enabled");
@@ -172,7 +177,7 @@ namespace AccessibilityInsights.VersionSwitcher
         private void DownloadFromUriToLocalFile(InstallationOptions options, Action<int> progressCallback)
         {
             ResultExecutionWrapper.Execute(ExecutionResult.ErrorMsiDownloadFailed,
-                () => Properties.Resources.UnableToDownloadInstallerFile, 
+                () => Properties.Resources.UnableToDownloadInstallerFile,
                 () =>
                 {
                     using (Stream stream = new FileStream(options.LocalInstallerFile, FileMode.CreateNew))
